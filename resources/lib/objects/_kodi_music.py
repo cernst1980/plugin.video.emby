@@ -198,6 +198,16 @@ class KodiMusic(KodiItems):
         ))
         self.cursor.execute(query, (args))
 
+    def update_album_18(self, *args):
+        query = ' '.join((
+
+            "UPDATE album",
+            "SET strArtistDisp = ?, iYear = ?, strGenres = ?, strReview = ?, strImage = ?,",
+                "iUserrating = ?, lastScraped = ?, strReleaseType = ?",
+            "WHERE idAlbum = ?"
+        ))
+        self.cursor.execute(query, (args))
+
     def update_album_17(self, *args):
         query = ' '.join((
 
