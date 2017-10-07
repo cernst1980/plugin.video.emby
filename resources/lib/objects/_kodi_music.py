@@ -306,17 +306,30 @@ class KodiMusic(KodiItems):
         self.cursor.execute(query, (args))
 
     def add_song(self, *args):
-        query = (
-            '''
-            INSERT INTO song(
-                idSong, idAlbum, idPath, strArtists, strGenres, strTitle, iTrack,
-                iDuration, iYear, strFileName, strMusicBrainzTrackID, iTimesPlayed, lastplayed,
-                rating)
+        if self.kodi_version == 18:
+            query = (
+                '''
+                INSERT INTO song(
+                    idSong, idAlbum, idPath, strArtistDisp, strGenres, strTitle, iTrack,
+                    iDuration, iYear, strFileName, strMusicBrainzTrackID, iTimesPlayed, lastplayed,
+                    rating)
 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            '''
-        )
-        self.cursor.execute(query, (args))
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                '''
+            )
+            self.cursor.execute(query, (args))
+        else:
+            query = (
+                '''
+                INSERT INTO song(
+                    idSong, idAlbum, idPath, strArtists, strGenres, strTitle, iTrack,
+                    iDuration, iYear, strFileName, strMusicBrainzTrackID, iTimesPlayed, lastplayed,
+                    rating)
+
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                '''
+            )
+            self.cursor.execute(query, (args))
 
     def update_song(self, *args):
         if self.kodi_version == 18:
