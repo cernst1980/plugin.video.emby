@@ -306,15 +306,24 @@ class KodiMusic(KodiItems):
         self.cursor.execute(query, (args))
 
     def update_song(self, *args):
-        query = ' '.join((
-
-            "UPDATE song",
-            "SET idAlbum = ?, strArtists = ?, strGenres = ?, strTitle = ?, iTrack = ?,",
-                "iDuration = ?, iYear = ?, strFilename = ?, iTimesPlayed = ?, lastplayed = ?,",
-                "rating = ?, comment = ?",
-            "WHERE idSong = ?"
-        ))
-        self.cursor.execute(query, (args))
+        if self.kodi_version == 18:
+            query = ' '.join((
+                "UPDATE song",
+                "SET idAlbum = ?, strArtistDisp = ?, strGenres = ?, strTitle = ?, iTrack = ?,",
+                    "iDuration = ?, iYear = ?, strFilename = ?, iTimesPlayed = ?, lastplayed = ?,",
+                    "rating = ?, comment = ?",
+                "WHERE idSong = ?"
+            ))
+            self.cursor.execute(query, (kodi_id, song_id, 1, index, artist))
+        else:
+            query = ' '.join((
+                "UPDATE song",
+                "SET idAlbum = ?, strArtists = ?, strGenres = ?, strTitle = ?, iTrack = ?,",
+                    "iDuration = ?, iYear = ?, strFilename = ?, iTimesPlayed = ?, lastplayed = ?,",
+                    "rating = ?, comment = ?",
+                "WHERE idSong = ?"
+            ))
+            self.cursor.execute(query, (args))
 
     def link_song_artist(self, kodi_id, song_id, index, artist):
 
