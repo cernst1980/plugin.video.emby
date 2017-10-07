@@ -267,8 +267,12 @@ class KodiMusic(KodiItems):
 
     def _update_album_artist(self, album_id, artists):
 
-        query = "UPDATE album SET strArtists = ? WHERE idAlbum = ?"
-        self.cursor.execute(query, (artists, album_id))
+        if self.kodi_version == 18:
+            query = "UPDATE album SET strArtistDisp = ? WHERE idAlbum = ?"
+            self.cursor.execute(query, (artists, album_id))
+        else:
+            query = "UPDATE album SET strArtists = ? WHERE idAlbum = ?"
+            self.cursor.execute(query, (artists, album_id))
 
     def add_single(self, *args):
         query = (
