@@ -314,7 +314,7 @@ class KodiMusic(KodiItems):
                     "rating = ?, comment = ?",
                 "WHERE idSong = ?"
             ))
-            self.cursor.execute(query, (kodi_id, song_id, 1, index, artist))
+            self.cursor.execute(query, (args))
         else:
             query = ' '.join((
                 "UPDATE song",
