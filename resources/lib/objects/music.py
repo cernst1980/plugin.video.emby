@@ -506,7 +506,8 @@ class Music(Items):
                                  checksum=checksum)
 
         # Link song to album
-        self.kodi_db.link_song_album(songid, albumid, track, title, duration)
+        if self.kodi_version < 18:
+            self.kodi_db.link_song_album(songid, albumid, track, title, duration)
         # Create default role
         if self.kodi_version > 16:
             self.kodi_db.add_role()
