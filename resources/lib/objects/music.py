@@ -303,7 +303,11 @@ class Music(Items):
             emby_db.addReference(itemid, albumid, "MusicAlbum", "album", checksum=checksum)
 
         # Process the album info
-        if self.kodi_version == 17:
+        if self.kodi_version == 18:
+            # Kodi Krypton
+            self.kodi_db.update_album_18(artistname, year, genre, bio, thumb, rating, lastScraped,
+                                         "album", albumid)
+        elif self.kodi_version == 17:
             # Kodi Krypton
             self.kodi_db.update_album_17(artistname, year, genre, bio, thumb, rating, lastScraped,
                                          "album", albumid)
