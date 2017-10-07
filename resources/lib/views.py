@@ -151,10 +151,14 @@ class Views(object):
         self.emby_db.addView(view_id, view_name, view_type, tag_id, group_series)
 
     def is_grouped_series(self, view_id, view_type):
-        try:
-            return self.emby.get_view_options(view_id)['EnableAutomaticSeriesGrouping'] if view_type == "tvshows" else None
-        except Exception as error: # Currently admin only api entrypoint
-            log.error(error)
+
+        if window('emby.userinfo.json')['Policy']['IsAdministrator']:
+            try:
+                return self.emby.get_view_options(view_id)['EnableAutomaticSeriesGrouping'] if view_type == "tvshows" else None
+            except Exception as error: # Currently admin only api entrypoint
+                log.error(error)
+                return None
+        else:
             return None
 
     def compare_view(self, media_type, view_id, view_name, view_type):
