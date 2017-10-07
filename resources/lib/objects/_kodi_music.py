@@ -241,13 +241,22 @@ class KodiMusic(KodiItems):
 
     def get_album_artist(self, album_id, artists):
 
-        query = ' '.join((
+        if self.kodi_version == 18:
+            query = ' '.join((
 
-            "SELECT strArtists",
-            "FROM album",
-            "WHERE idAlbum = ?"
-        ))
-        self.cursor.execute(query, (album_id,))
+                "SELECT strArtistDisp",
+                "FROM album",
+                "WHERE idAlbum = ?"
+            ))
+            self.cursor.execute(query, (album_id,))
+        else:
+            query = ' '.join((
+
+                "SELECT strArtists",
+                "FROM album",
+                "WHERE idAlbum = ?"
+            ))
+            self.cursor.execute(query, (album_id,))
         try:
             curr_artists = self.cursor.fetchone()[0]
         except TypeError:
